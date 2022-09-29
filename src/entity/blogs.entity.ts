@@ -1,28 +1,40 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  Timestamp,
+  UpdateDateColumn,
+  CreateDateColumn,
+} from 'typeorm';
 @Entity()
 export class Blogs {
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn({ comment: 'id' })
   id: number;
-  //标题
-  @Column()
+
+  @Column({ nullable: true, comment: '标题' })
   title: string;
-  // 内容
-  @Column()
+
+  @Column({ nullable: true, comment: '父级id' })
+  parent: number;
+
+  @Column({ nullable: true, comment: '内容' })
   content: string;
-  // 是否显示
-  @Column({ default: true })
+
+  @Column({ default: true, nullable: true, comment: '是否显示' })
   isShow: boolean;
-  //  浏览人数
-  @Column()
+
+  @Column({ nullable: true, comment: '浏览人数' })
   visitedNum: number;
-  // 点赞人数
-  @Column()
+
+  @Column({ nullable: true, comment: '点赞人数' })
   likedNum: number;
-  // 备注
-  @Column()
+
+  @Column({ nullable: true, comment: '备注' })
   introduction: string;
-  // 创建时间
-  createTime: Date;
-  // 修改时间
-  updateTime: Date;
+
+  @CreateDateColumn({ comment: '创建时间' })
+  createTime: Timestamp;
+
+  @UpdateDateColumn({ comment: '修改时间' })
+  updateTime: Timestamp;
 }
