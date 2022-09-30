@@ -7,7 +7,7 @@ export class BlogsController {
   constructor(private readonly blogsService: BlogsService) {}
   // 获取导航栏tree
   @Get('/getBlogsTree')
-  getList(): Promise<BlogsTree> {
+  getList(): Promise<BlogsTree[]> {
     return this.blogsService.getList();
   }
   // 获取content

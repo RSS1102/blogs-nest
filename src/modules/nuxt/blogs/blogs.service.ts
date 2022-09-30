@@ -15,14 +15,16 @@ export class BlogsService {
         if (item.parent === id && item.isShow === true) {
           list.push(item);
           delete item.parent;
+          delete item.isShow;
         }
       }
       for (const i of list) {
         i.children = [];
         formatter(rootlist, i.id, i.children);
         if (i.children.length === 0) {
-          delete i.children;
+          // i.children = null;
           delete i.parent;
+          delete i.isShow;
         }
       }
       return list;
@@ -31,8 +33,15 @@ export class BlogsService {
     const listnav = await this.BlogsRepository.find({
       select: ['id', 'title', 'parent', 'isShow'],
     });
-    const nav = formatter(listnav, null, []) as BlogsTree;
-    return nav;
+    const nav = formatter(listnav, null, []) as BlogsTree[];
+    // 将不含children的导航栏去掉
+    const tree = [];
+    for (const i of nav) {
+      if (i?.children.length > 0) {
+        tree.push(i);
+      }
+    }
+    return tree;
   }
 
   async getBlogsContent(title: string) {
