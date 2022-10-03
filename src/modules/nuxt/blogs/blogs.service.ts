@@ -44,10 +44,10 @@ export class BlogsService {
     return tree;
   }
 
-  async getBlogsContent(title: string) {
-    const getTitle = await this.BlogsRepository.findOneBy({
-      title: title,
+  async getBlogsContent(query: { title: string }) {
+    const getContent = await this.BlogsRepository.findOneBy({
+      ...query,
     });
-    return getTitle;
+    return getContent;
   }
 }
