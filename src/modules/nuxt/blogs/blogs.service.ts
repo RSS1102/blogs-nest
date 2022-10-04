@@ -9,7 +9,7 @@ export class BlogsService {
     private BlogsRepository: Repository<Blogs>,
   ) {}
 
-  async getList() {
+  async getBlogsTree() {
     const formatter = (rootlist: Blogs[], id: number, list: any[]): any => {
       for (const item of rootlist) {
         if (item.parent === id && item.isShow === true) {
@@ -48,6 +48,17 @@ export class BlogsService {
     const getContent = await this.BlogsRepository.findOneBy({
       ...query,
     });
-    return getContent;
+    if (getContent !== null) {
+      return {
+        code: 0,
+        data: getContent,
+      };
+    } else {
+      return {
+        code: 0,
+        data: getContent,
+        msg: '未查询到数据',
+      };
+    }
   }
 }

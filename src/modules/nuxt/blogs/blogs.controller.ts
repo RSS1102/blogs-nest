@@ -1,5 +1,7 @@
 import { Body, Controller, Get, Post, Query } from '@nestjs/common';
+import { BlogsDto } from 'src/dto/blogs';
 import { Blogs } from 'src/entity/blogs.entity';
+import { response } from 'src/type';
 import { BlogsService } from './blogs.service';
 
 @Controller('/blogs')
@@ -7,12 +9,12 @@ export class BlogsController {
   constructor(private readonly blogsService: BlogsService) {}
   // 获取导航栏tree
   @Get('getBlogsTree')
-  getList(): Promise<BlogsTree[]> {
-    return this.blogsService.getList();
+  getBlogsTree(): Promise<BlogsTree[]> {
+    return this.blogsService.getBlogsTree();
   }
   // 获取contenta
-  @Post('getBlogsContent')
-  addBlogs(@Query() query: { title: string }): Promise<Blogs | string> {
+  @Get('getBlogsContent')
+  getBlogsContent(@Query() query: BlogsDto): Promise<response<Blogs> | null> {
     console.log(query);
     return this.blogsService.getBlogsContent(query);
   }
