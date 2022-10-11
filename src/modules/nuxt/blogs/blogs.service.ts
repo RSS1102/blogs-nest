@@ -22,7 +22,6 @@ export class BlogsService {
         i.children = [];
         formatter(rootlist, i.id, i.children);
         if (i.children.length === 0) {
-          // i.children = null;
           delete i.parent;
           delete i.isShow;
         }
@@ -41,7 +40,11 @@ export class BlogsService {
         tree.push(i);
       }
     }
-    return tree;
+    return {
+      code: 0,
+      data: tree,
+      msg: '未查询到数据',
+    };
   }
 
   async getBlogsContent(query: { title: string }) {
@@ -55,7 +58,7 @@ export class BlogsService {
       };
     } else {
       return {
-        code: 0,
+        code: -1,
         data: getContent,
         msg: '未查询到数据',
       };
