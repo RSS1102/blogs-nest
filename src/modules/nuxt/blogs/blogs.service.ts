@@ -48,8 +48,18 @@ export class BlogsService {
   }
 
   async getBlogsContent(query: { title: string }) {
-    const getContent = await this.BlogsRepository.findOneBy({
-      ...query,
+    const getContent = await this.BlogsRepository.findOne({
+      where: query,
+      select: [
+        'id',
+        'title',
+        'content',
+        'introduction',
+        'likedNum',
+        'visitedNum',
+        'createTime',
+        'updateTime',
+      ],
     });
     if (getContent !== null) {
       return {
